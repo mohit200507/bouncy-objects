@@ -1,33 +1,31 @@
-var object1, object2;
+var car,wall;
+var speed,weight;
 
-function setup() {
-  createCanvas(1200,800);
-  object1 = createSprite(400, 100, 50, 80);
-  object1.shapeColor = "green";
-  object1.debug = true;
-  object2 = createSprite(400, 800,80,30);
-  object2.shapeColor = "green";
-  object2.debug = true;
-
-  object2.velocityY = -5;
-  object1.velocityY = +5;
+function setup(){
+    createCanvas(1600,400);
+speed=random(55,90);
+weight=random(400,1500);
+car=createSprite(50,200,50,50);
+car.velocityX=speed;
+car.shapeColor=color(255);
+wall=createSprite(1500,200,60,height/2);
+wall.shapeColor=color(80,80,80);
 }
 
-function draw() {
-  background(0,0,0);  
-bounceOff(object1,object2)  
-  
-  drawSprites();
-}
-function bounceOff(object3,object4){
-  if (object4.x - object3.x < object3.width/2 + object4.width/2
-    && object3.x - object4.x < object3.width/2 + object4.width/2) {
-  object4.velocityX = object4.velocityX * (-1);
-  object3.velocityX = object3.velocityX * (-1);
-}
-if (object4.y - object3.y < object3.height/2 + object4.height/2
-  && object3.y - object4.y < object3.height/2 + object4.height/2){
-  object4.velocityY = object4.velocityY * (-1);
-  object3.velocityY = object3.velocityY * (-1);
-}
+function draw(){
+  background(0,0,0);
+        if(wall.x-car.x< (car.width+wall.width)/2){
+        car.velocityX=0;
+        var deformation=0.5*weight*speed*speed/22500;
+        if(deformation>180){
+            car.shapeColor=color(255,0,0);
+        }
+        if(deformation<180 && deformation>100){
+            car.shapeColor=color(230,230,0);
+        }
+        if(deformation<100){
+            car.shapeColor=color(0,255,0);
+        }
+    }
+drawSprites();
 }
